@@ -4,6 +4,6 @@ export function generateStaticParams() {
   return [];
 }
 
-export default function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
-  return <ProductPageClient params={params} />;
+export default function ProductPage() {
+    return <ProductPageClient />;
 }
