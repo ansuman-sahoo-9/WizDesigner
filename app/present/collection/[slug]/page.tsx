@@ -1,27 +1,11 @@
-'use client';
-
-import { useParams } from 'next/navigation';
-import { getCategoryBySlug, getProductsByCategory } from '@/lib/present/dataLayer';
-import { PLPView } from '@/components/present/plp/PLPView';
+import { CollectionPageClient } from './client';
 
 export function generateStaticParams() {
-    return [];
+  return [];
 }
 
 export const dynamicParams = true;
 
-export default function CollectionPage() {
-  const { slug } = useParams<{ slug: string }>();
-  const cat = getCategoryBySlug(slug);
-  const products = getProductsByCategory(slug);
-  return (
-    <PLPView
-      categorySlug={`collection-${slug}`}
-      title={cat ? `${cat.name} Collection` : 'Collection'}
-      description={`A curated ${cat?.name ?? ''} collection.`}
-      breadcrumb={[{ label: 'Collections' }, { label: cat?.name ?? 'Collection' }]}
-      baseProducts={products}
-      category={cat}
-    />
-  );
+export default function CollectionPage({ params }: { params: Promise<{ slug: string }> }) {
+  return <CollectionPageClient params={params} />;
 }
