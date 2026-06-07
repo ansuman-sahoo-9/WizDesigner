@@ -4,6 +4,12 @@ import { useParams } from 'next/navigation';
 import { getCategoryBySlug, getProductsByCategory } from '@/lib/present/dataLayer';
 import { PLPView } from '@/components/present/plp/PLPView';
 
+export function generateStaticParams() {
+    return [];
+}
+
+export const dynamicParams = true;
+
 export default function CategoryPage() {
   const { slug } = useParams<{ slug: string }>();
   const cat = getCategoryBySlug(slug);
