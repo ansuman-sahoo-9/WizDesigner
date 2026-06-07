@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "wizdesigner",
+      "runtimeExecutable": "/Users/ansumansahoo/.local/node20/bin/node",
+      "runtimeArgs": ["node_modules/next/dist/bin/next", "dev", "--port", "4321"],
+      "port": 4321
+    }
+  ]
+}

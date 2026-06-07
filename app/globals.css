@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------ *
+ * WizDesigner — chrome design system
+ * Chrome (panels, top bar, modals) = calm premium neutral, Inter.
+ * Storefront preview = themed live via --sf-* custom properties.
+ * ------------------------------------------------------------------ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --chrome-bg: #f4f1ea;       /* app background, warm */
+  --chrome-panel: #ffffff;    /* panel surfaces */
+  --chrome-ink: #1c1a16;      /* primary text */
+  --chrome-muted: #6b6558;    /* secondary text */
+  --chrome-line: #e3ddd0;     /* hairlines */
+  --chrome-line-soft: #efeadf;
+  --chrome-accent: #ffe251;   /* WizDesigner yellow */
+  --chrome-dark: #1a1816;     /* dark chrome (variant switcher, present) */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--chrome-bg);
+  color: var(--chrome-ink);
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
+
+/* Thin, unobtrusive scrollbars for the chrome */
+.wd-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--chrome-line) transparent;
+}
+.wd-scroll::-webkit-scrollbar { width: 9px; height: 9px; }
+.wd-scroll::-webkit-scrollbar-thumb {
+  background: var(--chrome-line);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.wd-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* ------------------------------------------------------------------ *
+ * Storefront base — applied to the preview wrapper. Sections inherit
+ * fonts + colors from the --sf-* vars set by storefrontVars().
+ * No rounded corners inside the storefront: it stays editorial.
+ * ------------------------------------------------------------------ */
+.storefront {
+  background: var(--sf-bg);
+  color: var(--sf-ink);
+  font-family: var(--sf-body);
+}
+.storefront .sf-display { font-family: var(--sf-display); }
+.storefront .sf-pad-y { padding-top: var(--sf-pad); padding-bottom: var(--sf-pad); }
+.storefront h1, .storefront h2, .storefront h3 { line-height: 1.05; }
+
+/* Section frame in edit mode (the hover outline) */
+.sf-frame { position: relative; }
+.sf-frame:hover > .sf-frame-outline { opacity: 1; }
+.sf-frame-outline {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  box-shadow: inset 0 0 0 2px var(--chrome-accent); transition: opacity .15s; z-index: 5;
+}
+
+.sf-container { width: 100%; max-width: 1200px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+
+@keyframes wd-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.wd-fade { animation: wd-fade 0.25s ease both; }
+
+@keyframes wd-spin { to { transform: rotate(360deg); } }
+.wd-spin { animation: wd-spin 0.8s linear infinite; }
+
+/* Hide scrollbars on horizontal carousels inside the storefront */
+.no-bar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-bar::-webkit-scrollbar { display: none; }
